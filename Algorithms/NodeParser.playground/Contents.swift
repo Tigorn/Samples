@@ -20,25 +20,37 @@ class Node<T> {
 }
 
 extension Node: CustomStringConvertible {
+    
     var description: String {
         return "\(value) { " + children.map { $0.description }.joined(separator: ", ") + " }"
     }
+    
 }
 
 extension Node where T: Hashable {
     
-    static func make(_ dict: [T: Any?]) -> [Node<T>] {
-        var nodes = [Node<T>]()
-        for (key, value) in dict {
+    static func make(_ data: [T: Any?]) -> [Node<T>] {
+        return data.map { key, value in
             let node = Node(key)
             if let value = value as? [T: Any?] {
-                for child in Node.make(value) {
-                    node.addChild(child)
+                Node.make(value).forEach {
+                    node.addChild($0)
+                }
+            } else if let value = value as? [T] {
+                Node.make(value).forEach {
+                    node.addChild($0)
                 }
             }
-            nodes.append(node)
+            return node
         }
-        return nodes
+    }
+    
+}
+
+extension Node {
+    
+    static func make(_ data: [T]) -> [Node<T>] {
+        return data.map { Node($0) }
     }
     
 }
@@ -51,5 +63,22 @@ extension Dictionary where Key: Hashable {
     
 }
 
-let dict = ["Social": ["Arts": ["Art Dealers and Galleries": ""]]]
+extension Array {
+    
+    func makeNodes() -> [Node<Element>] {
+        return Node.make(self)
+    }
+    
+}
+
+let dict = [
+    "Social": [
+        "Arts": [
+            "Art Dealers and Galleries"
+        ],
+        "Bars": [
+            "Hotel Lounges"
+        ]
+    ]
+]
 print(dict.makeNodes())
