@@ -8,7 +8,7 @@ class TreeNode<T> {
     weak var parent: TreeNode?
     var children = [TreeNode<T>]()
     
-    init(value: T) {
+    init(_ value: T) {
         self.value = value
     }
     
@@ -24,8 +24,8 @@ extension TreeNode: CustomStringConvertible {
     }
 }
 
-let 👩🏼 = TreeNode(value: "Teresa")
-let 👸🏼 = TreeNode(value: "Teresa's daughter")
+let 👩🏼 = TreeNode("Teresa")
+let 👸🏼 = TreeNode("Teresa's daughter")
 
 👩🏼.addChild(👸🏼)
 let 👽 = 👸🏼.parent
