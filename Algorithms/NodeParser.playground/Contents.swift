@@ -77,7 +77,9 @@ let dict = [
             "Art Dealers and Galleries"
         ],
         "Bars": [
-            "Hotel Lounges"
+            "Hotel Lounges",
+            "Jazz and Blues Cafes",
+            "Sports Bars"
         ]
     ]
 ]
